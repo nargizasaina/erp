@@ -1,4 +1,3 @@
-const { log } = require('console');
 const {File} = require('../models');
 const stream = require('stream');
 
@@ -13,7 +12,7 @@ exports.list = async (req, res) => {
       limit: parseInt(list_size),
       offset: (page - 1) * list_size
     });    
-    console.log("fe", files);
+
     return res.json(files);
   } catch (error) {
     res.status(500).send(error);
@@ -104,7 +103,6 @@ exports.download = async(req, res) => {
     res.set('Content-Type', file.mimeType);
 
     readStream.pipe(res);
-    console.log(4);
   } catch (error) {
     res.status(500).send(error);
   }

@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const sequelize = require('./config/database');
 
 const app = express();
 const http = require('http');
@@ -12,8 +11,6 @@ app.use(bodyParser.json());
 
 const db = require("./models/index");
 db.sequelize.sync();
-
-// sequelize.sync();
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello!" });
