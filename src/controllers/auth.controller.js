@@ -7,12 +7,12 @@ exports.signup = async (req, res) => {
   try{
     const { id, password, passwordConfirmation } = req.body;
 
-    if (!validator.isEmail(id) && !validator.isMobilePhone(id)) {
-      return res.status(400).json({ message: 'Email or phone number is needed!' });
+    if (!id || !password || !passwordConfirmation) {
+      return res.status(400).json({ message: 'Fields: id, password and passwordConfirmation are needed!' });
     }
 
-    if (!passwordConfirmation) {
-      return res.status(400).json({ message: 'Field passwordConfirmation is needed!' });
+    if (!validator.isEmail(id) && !validator.isMobilePhone(id)) {
+      return res.status(400).json({ message: 'Email or phone number is needed!' });
     }
 
     if (password.length < 8) {

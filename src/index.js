@@ -26,3 +26,4 @@ server.listen(PORT, () => {
 });
 
 require("./routes/auth.route")(app);
+require("./routes/file.route")(app);

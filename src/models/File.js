@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       uploadDate: {
         type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      data: {
+        type: Sequelize.BLOB('long'),
         allowNull: false
       }
     },
