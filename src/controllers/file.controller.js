@@ -94,15 +94,15 @@ exports.download = async(req, res) => {
       return res.status(404).json({ message: 'File not found' });
     }
 
-    const fileContents = Buffer.from(file.data, "base64");  console.log(11111);
-    const readStream = new stream.PassThrough();  console.log(12222);
-    readStream.end(fileContents);  console.log(13333);
-    console.log(2);
+    const fileContents = Buffer.from(file.data, "base64");
+    const readStream = new stream.PassThrough();
+    readStream.end(fileContents); 
+
     const encodedFileName = encodeURIComponent(`${file.name}.${file.extension}`);
 
     res.set('Content-disposition', `attachment; filename="${encodedFileName}"`);
     res.set('Content-Type', file.mimeType);
-    console.log(3);
+
     readStream.pipe(res);
     console.log(4);
   } catch (error) {
