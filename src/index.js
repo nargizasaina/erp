@@ -2,14 +2,27 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const sequelize = require('./config/database');
+// const sequelize = require('./config/database');
 
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 
-sequelize.sync();
+const db = require("./models/index");
+db.sequelize.sync();
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+// sequelize.sync();
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello!" });
 });
+
+const PORT = process.env.PORT || 8010;
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+require("./routes/auth.route")(app);

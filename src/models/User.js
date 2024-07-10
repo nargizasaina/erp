@@ -1,28 +1,41 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+"use strict";
 const validator = require('validator');
-const File = require('./File');
 
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.STRING,
-    primaryKey: true,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmailOrPhone(value) {
-        if (!validator.isEmail(value) && !validator.isMobilePhone(value)) {
-          throw new Error('Email or phone number is needed!');
-        }
-      }
+const { Model, Sequelize } = require("sequelize");
+
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    static associate(models) {
+      User.hasMany(models.File)
+      User.hasMany(models.Token)
     }
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
   }
-});
 
-User.hasMany(File, { as: 'files', foreignKey: 'userId' });
+  User.init (
+    {
+      id: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmailOrPhone(value) {
+            if (!validator.isEmail(value) && !validator.isMobilePhone(value)) {
+              throw new Error('Email or phone number is needed!');
+            }
+          }
+        }
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    },
+    {
+      sequelize,
+      modelName: "User",
+    },
+  );
 
-module.exports = User;
+  return User;
+};
