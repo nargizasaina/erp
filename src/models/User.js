@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const validator = require('validator');
+const File = require('./File');
 
 const User = sequelize.define('User', {
   id: {
@@ -21,5 +22,7 @@ const User = sequelize.define('User', {
     allowNull: false
   }
 });
+
+User.hasMany(File, { as: 'files', foreignKey: 'userId' });
 
 module.exports = User;

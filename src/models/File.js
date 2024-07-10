@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const User = require('./User');
 
 const File = sequelize.define('File', {
   name: {
@@ -23,5 +24,7 @@ const File = sequelize.define('File', {
     allowNull: false
   }
 });
+
+File.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = File;
